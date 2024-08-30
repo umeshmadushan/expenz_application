@@ -103,6 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               );
                             },
+                            //custom button
                             child: CustomButton(
                               buttonName:
                                   showDetailsPage ? "Get Started" : "Next",
