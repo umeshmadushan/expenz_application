@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:expenz_application/constants/colors.dart';
 import 'package:expenz_application/constants/constats.dart';
+import 'package:expenz_application/screens/main_screen.dart';
+import 'package:expenz_application/services/user_service.dart';
 import 'package:expenz_application/widgets/custom_button.dart';
 import 'package:expenz_application/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // text controller
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -52,8 +54,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextfield(
-                      hintText: "Name",
-                      controller: _nameController,
+                      hintText: "Username",
+                      controller: _usernameController,
                       validate: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please fill in the name field!";
@@ -134,17 +136,31 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     GestureDetector(
                       onTap: () {
                         if (_formKey.currentState?.validate() == true) {
-                          String name = _nameController.text;
+                          String username = _usernameController.text;
                           String email = _emailController.text;
                           String password = _passwordController.text;
                           String confirmPassword =
                               _confirmPasswordController.text;
 
-                          print(name);
+                          UserService.StoreUserDetails(
+                              userName: username,
+                              email: email,
+                              password: password,
+                              confirmPassword: confirmPassword,
+                              context: context);
+                          // navigate to the main screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const MainScreen();
+                              },
+                            ),
+                          );
                         }
                       },
                       child: const CustomButton(
-                        buttonName: "Submit test button",
+                        buttonName: "Submit",
                         buttoncolor: kMainColor,
                       ),
                     ),
