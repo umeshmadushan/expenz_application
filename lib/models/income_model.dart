@@ -9,10 +9,10 @@ enum IncomeCategory {
 
 // category images
 final Map<IncomeCategory, String> incomeCategoryImages = {
-  IncomeCategory.freelance : "assets/images/freelance.png",
-  IncomeCategory.sales : "assets/images/salary.png",
-  IncomeCategory.passive : "assets/images/car.png",
-  IncomeCategory.salary : "assets/images/health.png",
+  IncomeCategory.freelance: "assets/images/freelance.png",
+  IncomeCategory.sales: "assets/images/salary.png",
+  IncomeCategory.passive: "assets/images/car.png",
+  IncomeCategory.salary: "assets/images/health.png",
 };
 
 //category colors
@@ -41,4 +41,29 @@ class IncomeModel {
     required this.time,
     required this.description,
   });
+
+  // convert toJSON
+  Map<String, dynamic> toJSON() {
+    return {
+      'id': id,
+      'title': title,
+      'amount': amount,
+      'category': category.index,
+      'date': date.toIso8601String(),
+      'time': time.toIso8601String(),
+      'description': description,
+    };
+  }
+
+  factory IncomeModel.fromJSON(Map<String, dynamic> json) {
+    return IncomeModel(
+      id: json['id'],
+      title: json['title'],
+      amount: json['amount'],
+      category: json['category'],
+      date: DateTime.parse(json['date']),
+      time: DateTime.parse(json['time']),
+      description: json['description'],
+    );
+  }
 }
