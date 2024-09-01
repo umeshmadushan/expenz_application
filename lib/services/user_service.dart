@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,5 +38,15 @@ class UserService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userName = prefs.getString("username");
     return userName != null;
+  }
+
+  // get the username and email
+  static Future<Map<String, String>> getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? userName = prefs.getString("username");
+    String? email = prefs.getString("email");
+
+    return {"username": userName!, "email": email!};
   }
 }
